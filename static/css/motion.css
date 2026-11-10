@@ -1,0 +1,157 @@
+/* ==========================================================================
+   MOVIMIENTO: resorte (spring), entrada en cascada y scroll suave
+   Se carga al final para pisar las transiciones anteriores.
+   ========================================================================== */
+:root {
+  --spring: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Si quieres un rebote real (pasa de largo y vuelve), usa esta en su lugar:
+     --spring: cubic-bezier(0.34, 1.56, 0.64, 1); */
+}
+
+/* El simulador usa esta variable en todas sus transiciones */
+.workbench-shell { --ease-physics: var(--spring); }
+
+/* ---------- 1. RESORTE EN BOTONES Y TARJETAS ---------- */
+.btn-lime-pill, .preset-card, .pillar-col, .team-card,
+.mail-pill, .copy-btn, .btn-telecom-send, .brand-logo,
+.workbench-shell .pill-btn, .workbench-shell .chip-toggle, .workbench-shell .deck-tab,
+.workbench-shell .nudge, .workbench-shell .step-pill, .workbench-shell .wave-option,
+.workbench-shell .m-cell, .workbench-shell .digital-card, .workbench-shell .eq-card,
+.workbench-shell .knob-box, .workbench-shell .wb-icon-box {
+  transition-property: transform, box-shadow, border-color, background-color, color, opacity;
+  transition-duration: 0.45s;
+  transition-timing-function: var(--spring);
+}
+
+.btn-lime-pill:hover   { transform: translateY(-2px) scale(1.02); }
+.preset-card:hover     { transform: translateY(-6px) scale(1.02); }
+.pillar-col:hover      { transform: translateY(-4px) scale(1.02); }
+.team-card:hover       { transform: translateY(-3px) scale(1.02); }
+.mail-pill:hover       { transform: translateY(-2px) scale(1.02); }
+.copy-btn:hover,
+.btn-telecom-send:hover { transform: translateY(-1px) scale(1.02); }
+
+/* Al presionar: se "hunde" y vuelve con el mismo resorte */
+.btn-lime-pill:active, .preset-card:active, .mail-pill:active,
+.copy-btn:active, .btn-telecom-send:active { transform: scale(0.98); }
+
+/* ---------- 2. ENTRADA EN CASCADA ---------- */
+@keyframes cascade-in {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Al cargar la página: de arriba hacia abajo y de izquierda a derecha.
+   "backwards" aplica el estado inicial solo durante el retraso, así no
+   bloquea los efectos hover al terminar. */
+.topbar                                   { animation: cascade-in 0.6s var(--spring) 0s    backwards; }
+.hero-wrap > div:first-child > .eyebrow-badge { animation: cascade-in 0.6s var(--spring) 0.10s backwards; }
+.hero-heading                             { animation: cascade-in 0.6s var(--spring) 0.20s backwards; }
+.hero-lead                                { animation: cascade-in 0.6s var(--spring) 0.32s backwards; }
+.hero-actions                             { animation: cascade-in 0.6s var(--spring) 0.44s backwards; }
+.hero-specs-row                           { animation: cascade-in 0.6s var(--spring) 0.54s backwards; }
+.hero-showcase                            { animation: cascade-in 0.6s var(--spring) 0.60s backwards; }
+
+/* Secciones al hacer scroll: mismo movimiento y duración */
+.reveal {
+  transform: translateY(15px);
+  transition: opacity 0.6s var(--spring), transform 0.6s var(--spring);
+}
+
+/* Simulador: sus bloques entran uno tras otro cuando aparece en pantalla */
+.workbench-section:not(.visible) :is(.wb-topbar, .scope-frame, .bottom-deck, .control-module) { opacity: 0; }
+.workbench-section.visible .wb-topbar                   { animation: cascade-in 0.6s var(--spring) 0.05s backwards; }
+.workbench-section.visible .scope-frame                 { animation: cascade-in 0.6s var(--spring) 0.15s backwards; }
+.workbench-section.visible .control-module:nth-child(1) { animation: cascade-in 0.6s var(--spring) 0.25s backwards; }
+.workbench-section.visible .control-module:nth-child(2) { animation: cascade-in 0.6s var(--spring) 0.35s backwards; }
+.workbench-section.visible .control-module:nth-child(3) { animation: cascade-in 0.6s var(--spring) 0.45s backwards; }
+.workbench-section.visible .bottom-deck                 { animation: cascade-in 0.6s var(--spring) 0.40s backwards; }
+
+/* ---------- 3. SCROLL CON INERCIA (requerido por Lenis) ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ---------- Accesibilidad: sin movimiento si el sistema lo pide ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .workbench-section:not(.visible) :is(.wb-topbar, .scope-frame, .bottom-deck, .control-module) { opacity: 1; }
+}
+
+/* ==========================================================================
+   EFECTO 3D TILT Y REFLEJO DINÁMICO (GLARE)
+   ========================================================================== */
+.tilt-card {
+  position: relative;
+  /* El resorte físico actúa solo al restablecer (mouseleave) */
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: perspective(1000px) rotateX(3deg) rotateY(-5deg) scale3d(1, 1, 1);
+}
+
+/* El pseudo-elemento que actúa como cristal iluminado */
+.tilt-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  border-radius: inherit; /* Hereda el borde curvo de la tarjeta */
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  /* El brillo dinámico guiado por CSS Variables */
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 65%
+  );
+  mix-blend-mode: overlay; /* Fusión elegante con los colores traseros */
+}
+
+/* Activar el brillo al hacer hover */
+.tilt-card.is-hovered::before {
+  opacity: 1;
+}
+
+/* Desactivar transición de transform al mover el ratón para 0 latencia */
+.tilt-card.is-moving {
+  transition: none !important; 
+}
+
+/* ==========================================================================
+   ANIMACIÓN DEL LOGO (TRAZADO DE OSCILOSCOPIO)
+   ========================================================================== */
+@keyframes draw-wave {
+  0% { 
+    stroke-dashoffset: 100;
+    filter: drop-shadow(0 0 0px rgba(34, 197, 94, 0));
+  }
+  100% { 
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6)); /* Brillo al terminar */
+  }
+}
+
+/* Aplicamos el efecto a la onda verde del logo */
+.brand-mark path:last-child {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-wave 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* Efecto de latido continuo para la onda celeste (fondo) */
+@keyframes pulse-wave {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.brand-mark path:nth-child(2) {
+  animation: pulse-wave 3s ease-in-out infinite;
+}

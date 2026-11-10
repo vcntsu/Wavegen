@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAVEGEN · Simulador de Ondas y Cálculo Integral</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230B0F19' stroke='%2310B981' stroke-width='1'/><path d='M4 16 C8 4, 12 4, 16 16 C20 28, 24 28, 28 16' stroke='%2322C55E' stroke-width='3' stroke-linecap='round' fill='none'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/pillars.css">
+<link rel="stylesheet" href="css/presets.css">
+<link rel="stylesheet" href="css/simulator.css">
+<link rel="stylesheet" href="css/telecom.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/motion.css">
+
+</head>
+<body>
+
+<!-- 1. BARRA SUPERIOR -->
+<div class="topbar-wrap" id="topbarWrap">
+  <header class="topbar">
+    <a href="#inicio" class="brand-logo">
+      <div class="brand-mark">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+          <line x1="3" y1="16" x2="29" y2="16" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" stroke-dasharray="2 2"/>
+          <path d="M3 16 C7 5, 11 5, 16 16 C21 27, 25 27, 29 16" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+          <path d="M3 16 C6.5 3, 11.5 3, 16 16 C20.5 29, 25.5 29, 29 16" stroke="#22C55E" stroke-width="2.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="brand-title">WAVEGEN</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#pilares">Fundamento</a>
+      <a href="#presets">Señales</a>
+      <a href="#workbench">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12h4l3-8 4 16 3-8h6"/>
+        </svg>
+        Simulador
+      </a>
+      <a href="#red-telecom">Diagnostico</a>
+    </nav>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </button>
+  </header>
+
+  <nav class="mobile-drawer" id="mobileDrawer">
+    <a href="#pilares">Fundamento</a>
+    <a href="#presets">Señales Tipo</a>
+    <a href="#workbench">Simulador</a>
+    <a href="#red-telecom">Red Telecom</a>
+  </nav>
+</div>
+
+<!-- 2. HERO -->
+<section class="hero-wrap reveal visible" id="inicio">
+  <div>
+    <div class="eyebrow-badge">
+      <span class="dot"></span>
+      <span> DOCKERIZED SIGNAL WORKBENCH · DG-1000</span>
+    </div>
+
+    <h1 class="hero-heading">
+      CÁLCULO DE <br>
+      <span class="highlight"> SEÑALES </span> EN <br>
+      TIEMPO REAL
+    </h1>
+
+    <p class="hero-lead">
+      Explora un generador de funciones y osciloscopio virtual diseñado para cuantificar tensión eficaz, potencia en decibeles y energía acústica mediante integración definida en tiempo real.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#workbench" class="btn-lime-pill">
+        <span>ABRIR SIMULADOR</span>
+        <span class="dark-circle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <div class="hero-specs-row">
+      <span class="spec-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Resolución analítica y numérica
+      </span>
+      <span class="spec-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg>
+        Frecuencia 10 Hz – 1.00 kHz
+      </span>
+      <span class="spec-item">
+        <span style="width:7px;height:7px;border-radius:50%;background:#10B981;display:inline-block"></span>
+        Web Audio API sin distorsión
+      </span>
+    </div>
+  </div>
+
+  <div class="hero-showcase">
+    <div class="orb-backdrop"></div>
+    <div class="floating-card-main">
+      <div class="fc-top">
+        <span>WAVEGEN DG-1000 · PREVIEW EN VIVO</span>
+        <span class="live-dot">● STREAMING 60 FPS</span>
+      </div>
+
+      <canvas id="heroCanvas" class="hero-mini-canvas"></canvas>
+
+      <div class="fc-stats">
+        <div class="fc-stat-item"><small>Integral Vrms</small><b id="heroRms">4.172 V</b></div>
+        <div class="fc-stat-item"><small>Nivel Acústico</small><b id="heroDb">12.41 dBV</b></div>
+        <div class="fc-stat-item"><small>Frecuencia</small><b id="heroFreq">150 Hz</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. FUNDAMENTO MATEMÁTICO -->
+<section class="pillars-section reveal" id="pilares">
+  <div class="pillars-banner">
+    <div class="pillars-eyebrow">TELECOMUNICACIONES INTELIGENTES & CÁLCULO INTEGRAL</div>
+    <div class="pillars-header-row">
+      <h2>Fundamento matemático aplicado a redes y señales</h2>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar-col">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M4 19h16M4 15l4-8 4 8 4-6 4 6"/></svg></div>
+        <h3>Integración Definida</h3>
+        <p>Resuelve numéricamente el área bajo la curva cuadrática v(t)² en cada periodo T para obtener el valor eficaz real.</p>
+      </div>
+
+      <div class="pillar-col">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg></div>
+        <h3>Ganancia en Decibeles</h3>
+        <p>Conversión logarítmica instantánea a dBV y dBm evaluando impedancias estándar de laboratorio de 50 Ω y 1 MΩ.</p>
+      </div>
+
+      <div class="pillar-col">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M10.5 7.5L6.5 16.5M13.5 7.5l4 9"/></svg></div>
+        <h3>Síntesis Acústica</h3>
+        <p>Monitoreo sonoro Web Audio API con filtro pasa-bajos y compresor dinámico que previene cualquier saturación.</p>
+      </div>
+
+      <div class="pillar-col">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Arquitectura Docker</h3>
+        <p>Contenedor multiplataforma que enlaza el cálculo científico en Python con renderizado acelerado a 60 FPS.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. SEÑALES BASE -->
+<section class="presets-section reveal" id="presets">
+  <div class="presets-intro">
+    <div>
+      <h2>EXPLORA NUESTRAS SEÑALES BASE</h2>
+      <div class="line-accent"></div>
+    </div>
+    <p>Selecciona un perfil preconfigurado para cargarlo automáticamente en el osciloscopio e inspeccionar su integral.</p>
+  </div>
+
+  <div class="presets-cards">
+    <button class="preset-card" data-preset="tono">
+      <div class="preset-preview"><svg viewBox="0 0 120 40"><path d="M4 20 C20 2, 36 38, 52 20 C68 2, 84 38, 100 20 C108 10, 114 15, 116 20"/></svg></div>
+      <div class="preset-foot">
+        <strong>Tono Puro Acústico</strong>
+        <span class="sub">440 Hz · 5.0 Vp<br>Senoidal</span>
+        <span class="preset-go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </button>
+
+    <button class="preset-card" data-preset="reloj">
+      <div class="preset-preview"><svg viewBox="0 0 120 40"><path d="M4 32V8H30V32H56V8H82V32H108V8H116"/></svg></div>
+      <div class="preset-foot">
+        <strong>Pulso Digital TTL</strong>
+        <span class="sub">250 Hz · 5.0 Vp<br>Cuadrada</span>
+        <span class="preset-go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </button>
+
+    <button class="preset-card" data-preset="portadora">
+      <div class="preset-preview"><svg viewBox="0 0 120 40"><path d="M4 20 Q12 4 20 20 T36 20 Q44 12 52 20 T68 20 Q76 4 84 20 T100 20"/></svg></div>
+      <div class="preset-foot">
+        <strong>Portadora Modulada AM</strong>
+        <span class="sub">600 Hz · 8.0 Vp<br>Mod AM</span>
+        <span class="preset-go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </button>
+
+    <button class="preset-card" data-preset="barrido">
+      <div class="preset-preview"><svg viewBox="0 0 120 40"><path d="M4 32L32 8V32L60 8V32L88 8V32L116 8"/></svg></div>
+      <div class="preset-foot">
+        <strong>Rampa de Sincronismo</strong>
+        <span class="sub">120 Hz · 6.5 Vp<br>Diente</span>
+        <span class="preset-go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- 5. SIMULADOR -->
+<section class="workbench-section reveal" id="workbench">
+  <div class="workbench-shell">
+    <div class="wb-topbar">
+      <div class="wb-brand">
+        <div class="wb-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg>
+        </div>
+        <div class="wb-title-stack">
+          <h2>WAVEGEN DG-1000 <span class="engine-tag" id="engine">● DOCKER ENGINE ONLINE</span></h2>
+          <small>Osciloscopio & Sintetizador de Cálculo Integral</small>
+        </div>
+      </div>
+
+      <div class="wb-actions">
+        <div class="audio-pill">
+          <button class="pill-btn lime" id="bAudio">🔈 Audio: OFF</button>
+          <input type="range" id="volSlider" class="vol-range" min="0" max="100" value="35" title="Volumen acústico suave">
+          <button class="pill-btn on" id="bSfx" title="Sonidos táctiles al mover controles">SFX</button>
+        </div>
+
+        <div class="pill-group">
+          <button class="pill-btn on" id="r50">50 Ω</button>
+          <button class="pill-btn" id="rhz">1 MΩ (Hi-Z)</button>
+        </div>
+
+        <div class="pill-group">
+          <button class="pill-btn lime on" id="bRun">RUN</button>
+          <button class="pill-btn on" id="bCh1">CH1</button>
+          <button class="pill-btn lime on" id="bOut">OUTPUT</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wb-main">
+      <div class="wb-left-col">
+        <div class="scope-frame">
+          <div class="scope-header">
+            <div class="signal-tags">
+              <span class="sig-tag"><i class="sig-dot" style="background:var(--emerald-bright)"></i> v(t): <b id="hudVdiv">2.0 V/div</b></span>
+              <span class="sig-tag"><i class="sig-dot" style="background:var(--amber)"></i> Área v(t)²</span>
+              <span class="sig-tag"><i class="sig-dot" style="background:var(--cyan)"></i> ±Vrms: <b style="color:var(--cyan)" id="hudRms">4.172 V</b></span>
+              <span class="sig-tag" style="color:var(--cyan)" id="hudTdiv">2.00 ms/div</span>
+            </div>
+
+            <div class="layer-pills">
+              <button class="chip-toggle" id="tFft" style="margin-right: 8px;">ESPECTRO FFT</button>
+              <button class="chip-toggle amber on" id="tShade">Área v(t)²</button>
+              <button class="chip-toggle cyan on" id="tRmsL">Guías ±Vrms</button>
+              <button class="chip-toggle indigo on" id="tCur">Cursor</button>
+            </div>
+          </div>
+
+          <div class="canvas-holder" id="screen">
+            <canvas id="scope"></canvas>
+          </div>
+
+          <div class="scope-statusbar">
+            <div class="status-badges">
+              <span>CARGA: <b id="hudR">50 Ω</b></span>
+              <span>CICLOS: <b id="hudCyc">3</b></span>
+              <span>MOD: <b id="hudMod">OFF</b></span>
+            </div>
+            <div class="cursor-readout" id="hudCursor">
+              Pasa el cursor sobre la gráfica para inspeccionar t, v(t) y el área integrada
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-deck">
+          <div class="deck-header">
+            <div class="deck-tabs">
+              <button class="deck-tab on" id="tabMetrics"> Telemetría </button>
+              <button class="deck-tab" id="tabMath"> Cálculo Integral y Decibeles</button>
+            </div>
+            <span class="active-func-pill" id="mV">v(t) = 5.90·sen(2π·150t)</span>
+          </div>
+
+          <div class="metrics-strip" id="viewMetrics">
+            <div class="m-cell"><small>Vrms (Valor Eficaz)</small><b class="c-lime" id="tRms">-</b></div>
+            <div class="m-cell"><small>Nivel (dBV)</small><b class="c-lime" id="tDb">-</b></div>
+            <div class="m-cell"><small id="tPl">Potencia (50 Ω)</small><b class="c-amber" id="tP">-</b></div>
+            <div class="m-cell"><small>Energía (1 Periodo)</small><b class="c-amber" id="tE">-</b></div>
+            <div class="m-cell"><small>Voltaje Pico (Vp)</small><b class="c-cyan" id="tVp">-</b></div>
+            <div class="m-cell"><small>Pico a Pico (Vpp)</small><b class="c-cyan" id="tVpp">-</b></div>
+            <div class="m-cell"><small>Potencia (dBm)</small><b class="c-amber" id="tDbm">-</b></div>
+            <div class="m-cell"><small>Periodo (T)</small><b class="c-cyan" id="tT">-</b></div>
+          </div>
+
+          <div class="integral-view" id="viewMath">
+            <div class="eq-card">
+              <div class="eq-card-top"><span class="lbl-eq">1. Integral Valor Eficaz</span><span class="eq-badge lime">VRMS</span></div>
+              <div class="katex-render" id="katexRms"></div>
+              <div class="eq-steps">
+                <div class="eq-step-row"><span>Área ∫ v(t)² dt:</span><strong class="c-amber" id="eqAreaVal">-</strong></div>
+                <div class="eq-step-row"><span>Valor Eficaz:</span><strong class="c-lime" id="eqRmsVal">-</strong></div>
+              </div>
+            </div>
+
+            <div class="eq-card">
+              <div class="eq-card-top"><span class="lbl-eq">2. Nivel Acústico</span><span class="eq-badge cyan">dBV</span></div>
+              <div class="katex-render" id="katexDbv"></div>
+              <div class="eq-steps">
+                <div class="eq-step-row"><span>Referencia V₀:</span><strong class="c-cyan">1.000 V</strong></div>
+                <div class="eq-step-row"><span>Nivel Calculado:</span><strong class="c-lime" id="eqDbvVal">-</strong></div>
+              </div>
+            </div>
+
+            <div class="eq-card">
+              <div class="eq-card-top"><span class="lbl-eq">3. Potencia de Enlace</span><span class="eq-badge amber">dBm · W</span></div>
+              <div class="katex-render" id="katexDbm"></div>
+              <div class="eq-steps">
+                <div class="eq-step-row"><span>Potencia P (V²/R):</span><strong class="c-amber" id="eqWattVal">-</strong></div>
+                <div class="eq-step-row"><span>Ganancia (1 mW):</span><strong class="c-amber" id="eqDbmVal">-</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="wb-right-col">
+        <div class="control-module">
+          <div class="mod-head">
+            <span class="title">Parámetros de Salida</span>
+            <span style="font-size:11px;color:#64748B">Clic para editar</span>
+          </div>
+          <div class="dual-readout">
+            <div class="digital-card freq">
+              <div class="dc-top">
+                <small>Frecuencia</small>
+                <div class="nudge-btns">
+                  <button class="nudge" data-k="freq" data-d="-1">−</button>
+                  <button class="nudge" data-k="freq" data-d="1">+</button>
+                </div>
+              </div>
+              <div class="dc-value" id="dF" data-k="freq">150 Hz</div>
+            </div>
+
+            <div class="digital-card amp">
+              <div class="dc-top">
+                <small>Amplitud (Vp)</small>
+                <div class="nudge-btns">
+                  <button class="nudge" data-k="amp" data-d="-1">−</button>
+                  <button class="nudge" data-k="amp" data-d="1">+</button>
+                </div>
+              </div>
+              <div class="dc-value" id="dA" data-k="amp">5.90 V</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-module">
+          <div class="mod-head"><span class="title">Forma de Onda Periódica</span></div>
+          <div class="wave-selector" id="waves">
+            <button class="wave-option on" data-f="senoidal"><svg viewBox="0 0 38 18"><path d="M2 9 C6 -1 12 -1 19 9 S32 19 36 9"/></svg>Senoidal</button>
+            <button class="wave-option" data-f="cuadrada"><svg viewBox="0 0 38 18"><path d="M2 15V3H12V15H22V3H32V15H36"/></svg>Cuadrada</button>
+            <button class="wave-option" data-f="triangular"><svg viewBox="0 0 38 18"><path d="M2 15L10 3L19 15L28 3L36 15"/></svg>Triangular</button>
+            <button class="wave-option" data-f="diente"><svg viewBox="0 0 38 18"><path d="M2 15L14 3V15L26 3V15L36 6"/></svg>Diente</button>
+          </div>
+
+          <div class="mod-strip" id="mods">
+            <span>Modulación</span>
+            <div class="pill-group">
+              <button class="pill-btn on" data-m="none">OFF</button>
+              <button class="pill-btn" data-m="am">AM</button>
+              <button class="pill-btn" data-m="fm">FM</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-module">
+          <div class="mod-head">
+            <span class="title">Codificadores de Precisión</span>
+            <div class="step-pills" id="steps">
+              <button class="step-pill" data-m="0.1">x0.1</button>
+              <button class="step-pill on" data-m="1">x1</button>
+              <button class="step-pill" data-m="10">x10</button>
+              <button class="step-pill" data-m="100">x100</button>
+            </div>
+          </div>
+          <div class="knobs-grid">
+            <div class="knob-box" id="kF"></div>
+            <div class="knob-box" id="kA"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 6. RED TELECOM -->
+<section class="telecom-net-section reveal" id="red-telecom">
+  <div class="telecom-net-card">
+    <div class="tn-info">
+      <span class="tn-badge">NETWORKING INTELIGENTE EN TELECOMUNICACIONES </span>
+      <h2>Diagnóstico de Enlace y Propagación</h2>
+      <p>
+        En ingeniería en telecomunicaciones, conocer el valor eficaz y la potencia en dBm mediante cálculo integral permite dimensionar enlaces de transmisión, evaluar la relación señal a ruido y prevenir pérdidas.
+      </p>
+      <div class="tn-bars">
+        <div class="tn-bar-item"><span>Nivel de Transmisión en Línea</span><span class="val" id="netDbm">25.42 dBm</span></div>
+        <div class="tn-bar-item"><span>Energía Integrada por Ciclo (∫ v² dt)</span><span class="val" id="netEnergy">3.481e-3 J</span></div>
+        <div class="tn-bar-item"><span>Estado del Nodo Contenedor</span><span class="val">Docker Port :5000 Ready</span></div>
+      </div>
+    </div>
+
+    <div class="tn-globe-area">
+      <div class="tn-quick-box">
+        <h4>Inyección Rápida</h4>
+        <div class="tn-field" id="netQuickFreq">Frecuencia: 150 Hz</div>
+        <div class="tn-field" id="netQuickAmp">Tensión Pico: 5.90 V</div>
+        <button class="btn-telecom-send" id="btnTestLink">Sincronizar con Osciloscopio</button>
+      </div>
+
+      <div class="globe-canvas-wrap">
+        <canvas id="globeCanvas" width="220" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FOOTER -->
+<footer class="closing-footer" id="creditos">
+  <div class="cf-inner">
+    <div class="cf-quote">
+      <div class="q-mark">“</div>
+      <h3>WaveGen transforma las integrales definidas en una experiencia visual y acústica tangible para el diagnóstico de señales en telecomunicaciones.</h3>
+    </div>
+
+  <div class="cf-team">
+    <div class="cf-label">EQUIPO DE DESARROLLO</div>
+    <div class="team-grid">
+      <div class="team-card"><span class="avatar">VG</span><div><b>Vicente Gálvez</b><small>Desarrollador</small></div></div>
+      <div class="team-card"><span class="avatar">MC</span><div><b>Marco Castillo</b><small>Desarrollador</small></div></div>
+      <div class="team-card"><span class="avatar">AC</span><div><b>Alexander Cortés</b><small>Desarrollador</small></div></div>
+    </div>
+  </div>
+
+  <div class="cf-contact" id="contacto">
+    <div class="cf-contact-text">
+      <div class="cf-label">CONTACTO</div>
+      <p>¿Dudas, comentarios o ideas sobre WaveGen? Escríbenos.</p>
+    </div>
+    <div class="cf-contact-actions">
+      <a class="mail-pill" href="mailto:vicentegalvezcl@gmail.com?subject=WaveGen%20-%20Consulta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <span>vicentegalvezcl@gmail.com</span>
+      </a>
+      <button class="copy-btn" id="btnCopyMail" type="button">Copiar</button>
+    </div>
+  </div>
+
+  <div class="cf-bottom">
+    <div class="tech-chips">
+      <span>Python</span><span>Docker</span><span>Web Audio API</span><span>Canvas 2D</span><span>KaTeX</span>
+    </div>
+    <div class="cf-copy">© 2026 WAVEGEN · Proyecto de Cálculo Integral</div>
+    <a href="#inicio" class="to-top">Volver arriba ↑</a>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

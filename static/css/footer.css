@@ -1,0 +1,92 @@
+/* Cierre, equipo y contacto */
+.closing-footer { background: var(--obsidian); color: #FFFFFF; padding: 72px 40px 28px; }
+
+/* Cita de cierre */
+.cf-inner { max-width: 1280px; margin: 0 auto; }
+.cf-quote { max-width: 980px; }
+.cf-quote .q-mark {
+  color: var(--emerald-bright); font-family: Georgia, serif; font-size: 72px; font-weight: 800;
+  line-height: 0.6; height: 36px; margin-bottom: 14px;
+}
+.cf-quote h3 {
+  font-size: 28px; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em;
+  color: #F1F5F9; margin: 0;
+}
+
+.cf-cta-box {
+  background: var(--obsidian-card); border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 22px; padding: 28px;
+}
+.cf-cta-box h4 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.cf-cta-box p { font-size: 13px; color: #94A3B8; margin-bottom: 20px; line-height: 1.55; }
+.cf-cta-box .btn-lime-pill { align-self: flex-start; }
+
+/* Equipo */
+.cf-team { max-width: 1280px; margin: 56px auto 0; padding-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.cf-label { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: var(--emerald-bright); margin-bottom: 18px; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.team-card {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px; padding: 14px 16px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.team-card:hover { transform: translateY(-3px); border-color: rgba(34, 197, 94, 0.45); }
+.team-card .avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(34, 197, 94, 0.14); border: 1px solid rgba(34, 197, 94, 0.4); color: var(--emerald-bright);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+.team-card b { display: block; font-size: 14.5px; color: #F8FAFC; }
+.team-card small { font-size: 12px; color: #94A3B8; }
+
+/* Contacto */
+.cf-contact {
+  max-width: 1280px; margin: 28px auto 0; padding: 20px 26px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px;
+  background: var(--obsidian-card); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 18px;
+}
+.cf-contact .cf-label { margin-bottom: 6px; }
+.cf-contact-text p { font-size: 15px; font-weight: 600; color: #E2E8F0; }
+.cf-contact-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.mail-pill {
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--emerald-bright);
+  background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 10px 18px; border-radius: 999px;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.mail-pill:hover { transform: translateY(-2px); background: rgba(34, 197, 94, 0.18); border-color: var(--emerald-bright); }
+
+.copy-btn {
+  font-size: 13px; font-weight: 700; padding: 10px 18px; border-radius: 999px;
+  color: #CBD5E1; border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.04);
+  transition: all 0.2s ease;
+}
+.copy-btn:hover { border-color: var(--emerald-bright); color: #FFFFFF; }
+.copy-btn.ok { background: var(--emerald-bright); border-color: var(--emerald-bright); color: var(--ink-dark); }
+
+/* Base del footer */
+.cf-bottom {
+  max-width: 1280px; margin: 40px auto 0; padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  font-size: 13px; color: #64748B;
+}
+.tech-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.tech-chips span {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.12); color: #CBD5E1;
+}
+.to-top { color: var(--emerald-bright); text-decoration: none; font-weight: 700; }
+.to-top:hover { text-decoration: underline; }
+
+/* Alinear el footer con el ancho de las demás secciones (1200px de contenido) */
+.cf-inner,
+.cf-team,
+.cf-contact,
+.cf-bottom {
+  max-width: 1200px;
+}

@@ -1,0 +1,67 @@
+/* Barra superior transparente y menú móvil */
+.topbar-wrap {
+  position: sticky; top: 0; z-index: 90;
+  background: transparent;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+}
+.topbar-wrap.scrolled {
+  background: rgba(246, 248, 252, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
+}
+.topbar-wrap.scrolled .topbar { padding-top: 16px; padding-bottom: 16px; }
+
+.topbar {
+  max-width: 1280px; margin: 0 auto; padding: 28px 40px 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  transition: padding 0.3s ease;
+}
+
+.brand-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: var(--ink-dark);
+  transition: transform 0.2s ease;
+}
+.brand-logo:hover { transform: translateY(-1px); }
+
+.brand-mark {
+  width: 47px; height: 47px; border-radius: 12px;
+  background: linear-gradient(145deg, #0F172A 0%, #090D16 100%);
+  border: 1px solid rgba(34, 197, 94, 0.38);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 18px rgba(11, 15, 25, 0.14);
+}
+.brand-title { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; color: var(--ink-dark); }
+
+.nav-links { display: flex; align-items: center; gap: 44px; }
+.nav-links a {
+  text-decoration: none; color: var(--ink-body);
+  font-size: 17px; font-weight: 700; padding: 8px 2px; position: relative;
+  transition: color 0.2s ease;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0%; height: 2px; border-radius: 999px; background: var(--emerald);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-links a:hover { color: var(--ink-dark); }
+.nav-links a:hover::after { width: 100%; }
+
+.mobile-menu-btn {
+  display: none; width: 42px; height: 42px; border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  align-items: center; justify-content: center; color: var(--ink-dark);
+}
+.mobile-drawer {
+  display: none; background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px); padding: 16px 24px;
+  flex-direction: column; gap: 12px;
+}
+.mobile-drawer.open { display: flex; }
+.mobile-drawer a {
+  text-decoration: none; color: var(--ink-dark);
+  font-weight: 700; font-size: 15px; padding: 10px 0;
+  border-bottom: 1px solid #F1F5F9;
+}

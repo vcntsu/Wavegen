@@ -1,0 +1,57 @@
+/* Señales base (valores finales ya consolidados) */
+.presets-section {
+  max-width: 1280px; margin: 0 auto; padding: 70px 40px;
+  display: grid; grid-template-columns: 250px 1fr; gap: 32px; align-items: center;
+}
+
+.presets-intro { display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.presets-intro h2 {
+  font-size: 26px; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--ink-dark); text-transform: uppercase; margin-bottom: 4px;
+}
+.presets-intro .line-accent { width: 56px; height: 4px; margin-top: 8px; border-radius: 999px; background: var(--emerald); }
+.presets-intro p { font-size: 15px; line-height: 1.65; color: var(--ink-body); }
+
+.presets-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+
+.preset-card {
+  background: #FFFFFF; border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px; padding: 16px 16px 18px;
+  display: flex; flex-direction: column; gap: 18px; text-align: left; cursor: pointer;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.preset-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 40px rgba(16, 185, 129, 0.16);
+  border-color: var(--emerald);
+}
+
+.preset-preview {
+  height: 112px; border-radius: 14px;
+  background: linear-gradient(145deg, #EAF8F1 0%, #DDF3EA 100%);
+  border: 1px solid rgba(16, 185, 129, 0.16);
+  display: flex; align-items: center; justify-content: center;
+}
+.preset-preview svg {
+  width: 74%; height: 54px; stroke: var(--emerald); stroke-width: 2.8; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.25));
+}
+
+.preset-foot { position: relative; display: block; padding-right: 50px; min-height: 84px; }
+.preset-foot strong { display: block; font-size: 15.5px; font-weight: 800; line-height: 1.25; color: var(--ink-dark); margin-bottom: 8px; }
+.preset-foot span.sub {
+  display: block; font-family: var(--font-mono); font-size: 11.5px; font-weight: 600;
+  line-height: 1.6; color: var(--ink-muted); white-space: nowrap;
+}
+
+.preset-go {
+  position: absolute; right: 0; bottom: 0; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--emerald-bright); color: var(--ink-dark);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 16px var(--emerald-glow);
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.preset-go svg { width: 20px; height: 20px; }
+.preset-card:hover .preset-go { background: var(--ink-dark); color: var(--emerald-bright); transform: rotate(-45deg); }

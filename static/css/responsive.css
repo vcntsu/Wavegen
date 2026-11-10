@@ -1,0 +1,84 @@
+/* Todos los @media juntos y al final, para que siempre ganen sobre las reglas base */
+@media (max-width: 1120px) {
+  .topbar, .hero-wrap, .pillars-section, .presets-section,
+  .workbench-section, .telecom-net-section, .closing-footer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: inline-flex; }
+
+  .hero-wrap, .wb-main, .presets-section, .telecom-net-card, .cf-inner { grid-template-columns: 1fr; }
+  .pillars-grid, .presets-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .integral-view { grid-template-columns: 1fr; }
+  .floating-card-main { transform: none; }
+}
+
+@media (max-width: 680px) {
+  .pillars-grid, .presets-cards, .metrics-strip, .tn-globe-area { grid-template-columns: 1fr; }
+  .hero-actions .btn-lime-pill { width: 100%; justify-content: space-between; }
+  .fc-stats { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .cf-quote h3 { font-size: 22px; }
+}
+
+/* ==========================================================================
+   ARQUITECTURA RESPONSIVA ESTRICTA (MÓVILES <= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 1. Hitboxes Táctiles Seguras (44x44px mínimo) según estándares de accesibilidad */
+  .workbench-shell .pill-btn,
+  .workbench-shell .chip-toggle,
+  .workbench-shell .wave-option,
+  .workbench-shell .step-pill,
+  .workbench-shell .deck-tab,
+  .workbench-shell .nudge,
+  .copy-btn, 
+  .mail-pill {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Expandir ligeramente las opciones de onda para mejor lectura en móvil */
+  .workbench-shell .wave-option {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* 2. Apilamiento Vertical Lógico Controlado */
+  .workbench-shell .wb-main {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px;
+  }
+  
+  /* Permite que los hijos de la columna izquierda se reordenen de forma independiente */
+  .workbench-shell .wb-left-col {
+    display: contents !important; 
+  }
+
+  /* 3. Forzar el orden exacto de lectura móvil */
+  .workbench-shell .scope-frame { 
+    order: 1 !important; 
+    width: 100% !important; 
+  }
+  .workbench-shell .wb-right-col { 
+    order: 2 !important; 
+    width: 100% !important; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px;
+  }
+  .workbench-shell .bottom-deck { 
+    order: 3 !important; 
+    width: 100% !important; 
+  }
+
+  /* Prevenir que el gráfico sea inmenso y tape los controles al hacer scroll */
+  .workbench-shell .canvas-holder {
+    height: 220px !important;
+  }
+}
