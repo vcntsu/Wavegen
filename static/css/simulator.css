@@ -1329,3 +1329,141 @@
   position: relative;
   z-index: 2;
 }
+
+/* ==========================================================================
+   REFINAMIENTO VISUAL DSO: CONSOLA POR PESTAÑAS Y SLIDERS DE HARDWARE
+   ========================================================================== */
+
+.scope-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding: 10px 14px;
+}
+
+.signal-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.sig-tag {
+  white-space: nowrap;
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+.layer-pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
+
+.chip-toggle {
+  white-space: nowrap;
+  padding: 4px 9px;
+  font-size: 11px;
+}
+
+/* Selector superior del Rack derecho (1. GENERADOR | 2. ESCALA & TRIGGER | 3. CH2 & MATH) */
+.rack-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: rgba(9, 13, 22, 0.9);
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.rack-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94A3B8;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 8px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.rack-tab:hover {
+  color: #E2E8F0;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rack-tab.on {
+  background: rgba(16, 185, 129, 0.14);
+  color: #22C55E;
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.12);
+}
+
+.rack-pane {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rack-pane.active {
+  display: flex;
+}
+
+/* Grilla de sliders y tarjetas compactas */
+.osc-sliders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.slider-card {
+  padding: 9px 11px !important;
+}
+
+.dso-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  outline: none;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.dso-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0B0F19;
+  border: 2.5px solid #22C55E;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.45);
+  cursor: grab;
+  transition: transform 0.12s ease;
+}
+
+.dso-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.dso-slider.cyan::-webkit-slider-thumb {
+  border-color: #38BDF8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.45);
+}
+
+.dso-slider.amber::-webkit-slider-thumb {
+  border-color: #F59E0B;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
+}

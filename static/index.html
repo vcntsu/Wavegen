@@ -77,9 +77,9 @@
     </div>
 
     <h1 class="hero-heading">
-      CÁLCULO DE <br>
-      <span class="highlight"> SEÑALES </span> EN <br>
-      TIEMPO REAL
+      OSCILOSCOPIO <br>
+      <span class="highlight"> VIRTUAL </span> DE <br>
+      TELEMETRIA
     </h1>
 
     <p class="hero-lead">
@@ -220,6 +220,7 @@
 <!-- 5. SIMULADOR -->
 <section class="workbench-section reveal" id="workbench">
   <div class="workbench-shell">
+    <!-- BARRA SUPERIOR DEL EQUIPO -->
     <div class="wb-topbar">
       <div class="wb-brand">
         <div class="wb-icon-box">
@@ -227,7 +228,7 @@
         </div>
         <div class="wb-title-stack">
           <h2>WAVEGEN DG-1000 <span class="engine-tag" id="engine">● DOCKER ENGINE ONLINE</span></h2>
-          <small>Osciloscopio & Sintetizador de Cálculo Integral</small>
+          <small>Osciloscopio Digital DSO & Generador de Cálculo Integral</small>
         </div>
       </div>
 
@@ -246,27 +247,32 @@
         <div class="pill-group">
           <button class="pill-btn lime on" id="bRun">RUN</button>
           <button class="pill-btn on" id="bCh1">CH1</button>
+          <button class="pill-btn" id="bCh2">CH2</button>
           <button class="pill-btn lime on" id="bOut">OUTPUT</button>
         </div>
       </div>
     </div>
 
+    <!-- CUERPO PRINCIPAL NIVELADO -->
     <div class="wb-main">
+      <!-- COLUMNA IZQUIERDA: PANTALLA + PANEL INFERIOR UNIFICADO EN 3 PESTAÑAS -->
       <div class="wb-left-col">
         <div class="scope-frame">
           <div class="scope-header">
             <div class="signal-tags">
-              <span class="sig-tag"><i class="sig-dot" style="background:var(--emerald-bright)"></i> v(t): <b id="hudVdiv">2.0 V/div</b></span>
-              <span class="sig-tag"><i class="sig-dot" style="background:var(--amber)"></i> Área v(t)²</span>
-              <span class="sig-tag"><i class="sig-dot" style="background:var(--cyan)"></i> ±Vrms: <b style="color:var(--cyan)" id="hudRms">4.172 V</b></span>
+              <span class="sig-tag"><i class="sig-dot" style="background:var(--emerald-bright)"></i>CH1 <b id="hudVdiv">2.0 V/div</b></span>
               <span class="sig-tag" style="color:var(--cyan)" id="hudTdiv">2.00 ms/div</span>
+              <span class="sig-tag"><i class="sig-dot" style="background:var(--cyan)"></i>Vrms <b style="color:var(--cyan)" id="hudRms">4.172 V</b></span>
+              <span class="sig-tag"><b id="hudTrigState" style="color:#38BDF8">FREE RUN</b></span>
             </div>
 
             <div class="layer-pills">
-              <button class="chip-toggle" id="tFft" style="margin-right: 8px;">ESPECTRO FFT</button>
-              <button class="chip-toggle amber on" id="tShade">Área v(t)²</button>
-              <button class="chip-toggle cyan on" id="tRmsL">Guías ±Vrms</button>
-              <button class="chip-toggle indigo on" id="tCur">Cursor</button>
+              <button class="chip-toggle" id="tFft" title="Analizador de Espectro FFT">FFT</button>
+              <button class="chip-toggle cyan" id="tXY" title="Modo Cartesiano X-Y (Lissajous)">X-Y</button>
+              <button class="chip-toggle amber on" id="tShade" title="Área integrada bajo v(t)²">Área v²</button>
+              <button class="chip-toggle cyan on" id="tRmsL" title="Líneas de Valor Eficaz">±Vrms</button>
+              <button class="chip-toggle indigo on" id="tCur" title="Cursor de inspección">Inspector</button>
+              <button class="chip-toggle indigo" id="tManCur" title="Cursores manuales arrastrables ΔV y Δt">Cursores Δ</button>
             </div>
           </div>
 
@@ -286,15 +292,18 @@
           </div>
         </div>
 
+        <!-- PANEL INFERIOR UNIFICADO (TELEMETRÍA | MEASURE DSO | CÁLCULO INTEGRAL) -->
         <div class="bottom-deck">
           <div class="deck-header">
             <div class="deck-tabs">
-              <button class="deck-tab on" id="tabMetrics"> Telemetría </button>
-              <button class="deck-tab" id="tabMath"> Cálculo Integral y Decibeles</button>
+              <button class="deck-tab on" id="tabMetrics">Telemetría</button>
+              <button class="deck-tab" id="tabMeasure">MEASURE (Transitorios)</button>
+              <button class="deck-tab" id="tabMath">Cálculo Integral y dB</button>
             </div>
             <span class="active-func-pill" id="mV">v(t) = 5.90·sen(2π·150t)</span>
           </div>
 
+          <!-- VISTA 1: TELEMETRÍA -->
           <div class="metrics-strip" id="viewMetrics">
             <div class="m-cell"><small>Vrms (Valor Eficaz)</small><b class="c-lime" id="tRms">-</b></div>
             <div class="m-cell"><small>Nivel (dBV)</small><b class="c-lime" id="tDb">-</b></div>
@@ -306,6 +315,17 @@
             <div class="m-cell"><small>Periodo (T)</small><b class="c-cyan" id="tT">-</b></div>
           </div>
 
+          <!-- VISTA 2: MEASURE (TRANSITORIOS AUTOMÁTICOS DEL OSCILOSCOPIO) -->
+          <div class="metrics-strip hidden" id="viewMeasure" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="m-cell"><small>Rise Time (tr 10–90%)</small><b class="c-lime" id="mRise">1.48 ms</b></div>
+            <div class="m-cell"><small>Fall Time (tf 90–10%)</small><b class="c-lime" id="mFall">1.48 ms</b></div>
+            <div class="m-cell"><small>Ancho de Pulso (+PW)</small><b class="c-cyan" id="mPWidth">3.33 ms</b></div>
+            <div class="m-cell"><small>Ciclo de Trabajo (Duty)</small><b class="c-cyan" id="mDuty">50.0 %</b></div>
+            <div class="m-cell"><small>Sobreimpulso (Overshoot)</small><b class="c-amber" id="mOver">0.0 %</b></div>
+            <div class="m-cell"><small>Desfase Lissajous (θ)</small><b class="c-amber" id="mPhase">0° (CH2 OFF)</b></div>
+          </div>
+
+          <!-- VISTA 3: CÁLCULO INTEGRAL -->
           <div class="integral-view" id="viewMath">
             <div class="eq-card">
               <div class="eq-card-top"><span class="lbl-eq">1. Integral Valor Eficaz</span><span class="eq-badge lime">VRMS</span></div>
@@ -337,69 +357,209 @@
         </div>
       </div>
 
+      <!-- COLUMNA DERECHA: CONSOLA DE MANDOS CON SELECTOR DE MÓDULO PARA NO SATURAR -->
       <aside class="wb-right-col">
-        <div class="control-module">
-          <div class="mod-head">
-            <span class="title">Parámetros de Salida</span>
-            <span style="font-size:11px;color:#64748B">Clic para editar</span>
-          </div>
-          <div class="dual-readout">
-            <div class="digital-card freq">
-              <div class="dc-top">
-                <small>Frecuencia</small>
-                <div class="nudge-btns">
-                  <button class="nudge" data-k="freq" data-d="-1">−</button>
-                  <button class="nudge" data-k="freq" data-d="1">+</button>
+        <!-- CONMUTADOR DE CONSOLA DE HARDWARE -->
+        <div class="rack-switcher" id="rackTabs">
+          <button class="rack-tab on" data-rack="gen">1. GENERADOR</button>
+          <button class="rack-tab" data-rack="dso">2. ESCALA & TRIGGER</button>
+          <button class="rack-tab" data-rack="ch2">3. CH2 & MATH</button>
+        </div>
+
+        <!-- PANEL A: GENERADOR DE FUNCIONES (CH1) -->
+        <div class="rack-pane active" id="paneGen">
+          <div class="control-module">
+            <div class="mod-head">
+              <span class="title">Parámetros de Salida (CH1)</span>
+              <span style="font-size:11px;color:#64748B">Clic para editar</span>
+            </div>
+            <div class="dual-readout">
+              <div class="digital-card freq">
+                <div class="dc-top">
+                  <small>Frecuencia</small>
+                  <div class="nudge-btns">
+                    <button class="nudge" data-k="freq" data-d="-1">−</button>
+                    <button class="nudge" data-k="freq" data-d="1">+</button>
+                  </div>
                 </div>
+                <div class="dc-value" id="dF" data-k="freq">150 Hz</div>
               </div>
-              <div class="dc-value" id="dF" data-k="freq">150 Hz</div>
+
+              <div class="digital-card amp">
+                <div class="dc-top">
+                  <small>Amplitud (Vp)</small>
+                  <div class="nudge-btns">
+                    <button class="nudge" data-k="amp" data-d="-1">−</button>
+                    <button class="nudge" data-k="amp" data-d="1">+</button>
+                  </div>
+                </div>
+                <div class="dc-value" id="dA" data-k="amp">5.90 V</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-module">
+            <div class="mod-head"><span class="title">Forma de Onda Periódica</span></div>
+            <div class="wave-selector" id="waves">
+              <button class="wave-option on" data-f="senoidal"><svg viewBox="0 0 38 18"><path d="M2 9 C6 -1 12 -1 19 9 S32 19 36 9"/></svg>Senoidal</button>
+              <button class="wave-option" data-f="cuadrada"><svg viewBox="0 0 38 18"><path d="M2 15V3H12V15H22V3H32V15H36"/></svg>Cuadrada</button>
+              <button class="wave-option" data-f="triangular"><svg viewBox="0 0 38 18"><path d="M2 15L10 3L19 15L28 3L36 15"/></svg>Triangular</button>
+              <button class="wave-option" data-f="diente"><svg viewBox="0 0 38 18"><path d="M2 15L14 3V15L26 3V15L36 6"/></svg>Diente</button>
             </div>
 
-            <div class="digital-card amp">
-              <div class="dc-top">
-                <small>Amplitud (Vp)</small>
-                <div class="nudge-btns">
-                  <button class="nudge" data-k="amp" data-d="-1">−</button>
-                  <button class="nudge" data-k="amp" data-d="1">+</button>
-                </div>
+            <div class="mod-strip" id="mods">
+              <span>Modulación</span>
+              <div class="pill-group">
+                <button class="pill-btn on" data-m="none">OFF</button>
+                <button class="pill-btn" data-m="am">AM</button>
+                <button class="pill-btn" data-m="fm">FM</button>
               </div>
-              <div class="dc-value" id="dA" data-k="amp">5.90 V</div>
+            </div>
+          </div>
+
+          <div class="control-module">
+            <div class="mod-head">
+              <span class="title">Codificadores de Precisión</span>
+              <div class="step-pills" id="steps">
+                <button class="step-pill" data-m="0.1">x0.1</button>
+                <button class="step-pill on" data-m="1">x1</button>
+                <button class="step-pill" data-m="10">x10</button>
+                <button class="step-pill" data-m="100">x100</button>
+              </div>
+            </div>
+            <div class="knobs-grid">
+              <div class="knob-box" id="kF"></div>
+              <div class="knob-box" id="kA"></div>
             </div>
           </div>
         </div>
 
-        <div class="control-module">
-          <div class="mod-head"><span class="title">Forma de Onda Periódica</span></div>
-          <div class="wave-selector" id="waves">
-            <button class="wave-option on" data-f="senoidal"><svg viewBox="0 0 38 18"><path d="M2 9 C6 -1 12 -1 19 9 S32 19 36 9"/></svg>Senoidal</button>
-            <button class="wave-option" data-f="cuadrada"><svg viewBox="0 0 38 18"><path d="M2 15V3H12V15H22V3H32V15H36"/></svg>Cuadrada</button>
-            <button class="wave-option" data-f="triangular"><svg viewBox="0 0 38 18"><path d="M2 15L10 3L19 15L28 3L36 15"/></svg>Triangular</button>
-            <button class="wave-option" data-f="diente"><svg viewBox="0 0 38 18"><path d="M2 15L14 3V15L26 3V15L36 6"/></svg>Diente</button>
+        <!-- PANEL B: ESCALA & DISPARO DEL OSCILOSCOPIO (DSO) -->
+        <div class="rack-pane" id="paneDso">
+          <div class="control-module">
+            <div class="mod-head">
+              <span class="title">Escala Horizontal & Vertical</span>
+              <button class="step-pill on" id="bAutoScale" title="Ajustar Volts/Div y Time/Div automáticamente">AUTOSCALE</button>
+            </div>
+
+            <div class="dual-readout" style="margin-bottom:10px;">
+              <div class="digital-card amp">
+                <div class="dc-top">
+                  <small>Volts / Div</small>
+                  <div class="nudge-btns">
+                    <button class="nudge" id="vdivDown" type="button">−</button>
+                    <button class="nudge" id="vdivUp" type="button">+</button>
+                  </div>
+                </div>
+                <div class="dc-value" id="valVdiv" style="font-size:16px;cursor:default;">2.0 V/div</div>
+              </div>
+
+              <div class="digital-card freq">
+                <div class="dc-top">
+                  <small>Time / Div</small>
+                  <div class="nudge-btns">
+                    <button class="nudge" id="tdivDown" type="button">−</button>
+                    <button class="nudge" id="tdivUp" type="button">+</button>
+                  </div>
+                </div>
+                <div class="dc-value" id="valTdiv" style="font-size:16px;cursor:default;">2.00 ms/div</div>
+              </div>
+            </div>
+
+            <div class="osc-sliders-grid">
+              <div class="digital-card slider-card">
+                <div class="dc-top"><small>Posición Y (CH1)</small><b id="valPosY" class="c-lime">+0.0 div</b></div>
+                <input type="range" class="dso-slider lime" id="slPosY" min="-3.5" max="3.5" step="0.1" value="0">
+              </div>
+
+              <div class="digital-card slider-card">
+                <div class="dc-top"><small>Posición X (Tiempo)</small><b id="valPosX" class="c-cyan">+0.0 div</b></div>
+                <input type="range" class="dso-slider cyan" id="slPosX" min="-4" max="4" step="0.1" value="0">
+              </div>
+            </div>
+
+            <div class="mod-strip" style="margin-top:10px;">
+              <span>Acoplamiento de Canal</span>
+              <div class="step-pills" id="coupGroup">
+                <button class="step-pill on" data-c="DC">DC</button>
+                <button class="step-pill" data-c="AC">AC</button>
+                <button class="step-pill" data-c="GND">GND</button>
+              </div>
+            </div>
           </div>
 
-          <div class="mod-strip" id="mods">
-            <span>Modulación</span>
-            <div class="pill-group">
-              <button class="pill-btn on" data-m="none">OFF</button>
-              <button class="pill-btn" data-m="am">AM</button>
-              <button class="pill-btn" data-m="fm">FM</button>
+          <div class="control-module">
+            <div class="mod-head">
+              <span class="title">Sistema de Disparo (Trigger)</span>
+              <button class="step-pill on" id="bSlope">FLANCO ↑</button>
+            </div>
+
+            <div class="mod-strip" style="margin-bottom:10px;">
+              <span>Modo de Barrido</span>
+              <div class="step-pills" id="trigModes">
+                <button class="step-pill" data-tm="AUTO">AUTO</button>
+                <button class="step-pill" data-tm="NORM">NORM</button>
+                <button class="step-pill on" data-tm="FREE">FREE</button>
+              </div>
+            </div>
+
+            <div class="digital-card slider-card">
+              <div class="dc-top">
+                <small>Nivel de Disparo (Trigger Level)</small>
+                <b id="valTrigLvl" class="c-amber">+0.00 V</b>
+              </div>
+              <input type="range" class="dso-slider amber" id="slTrigLvl" min="-10" max="10" step="0.1" value="0">
             </div>
           </div>
         </div>
 
-        <div class="control-module">
-          <div class="mod-head">
-            <span class="title">Codificadores de Precisión</span>
-            <div class="step-pills" id="steps">
-              <button class="step-pill" data-m="0.1">x0.1</button>
-              <button class="step-pill on" data-m="1">x1</button>
-              <button class="step-pill" data-m="10">x10</button>
-              <button class="step-pill" data-m="100">x100</button>
+        <!-- PANEL C: CANAL 2 (CH2), ÁLGEBRA MATH Y LISSAJOUS -->
+        <div class="rack-pane" id="paneCh2">
+          <div class="control-module">
+            <div class="mod-head">
+              <span class="title">Canal Secundario (CH2)</span>
+              <button class="step-pill" id="bCh2Toggle">CH2: OFF</button>
+            </div>
+
+            <div class="mod-strip" style="margin-bottom:10px;">
+              <span>Forma de Onda CH2</span>
+              <div class="step-pills" id="ch2Waves">
+                <button class="step-pill on" data-f2="senoidal">Senoidal</button>
+                <button class="step-pill" data-f2="cuadrada">Cuadrada</button>
+                <button class="step-pill" data-f2="triangular">Triangular</button>
+              </div>
+            </div>
+
+            <div class="osc-sliders-grid">
+              <div class="digital-card slider-card">
+                <div class="dc-top"><small>Amplitud CH2</small><b id="valAmp2" class="c-cyan">4.0 Vp</b></div>
+                <input type="range" class="dso-slider cyan" id="slAmp2" min="0.5" max="10" step="0.1" value="4.0">
+              </div>
+
+              <div class="digital-card slider-card">
+                <div class="dc-top"><small>Desfase (φ)</small><b id="valPhase2" class="c-amber">90°</b></div>
+                <input type="range" class="dso-slider amber" id="slPhase2" min="0" max="360" step="5" value="90">
+              </div>
             </div>
           </div>
-          <div class="knobs-grid">
-            <div class="knob-box" id="kF"></div>
-            <div class="knob-box" id="kA"></div>
+
+          <div class="control-module">
+            <div class="mod-head">
+              <span class="title">Álgebra Multicanal & Cursores</span>
+            </div>
+
+            <div class="mod-strip" style="margin-bottom:10px;">
+              <span>Función MATH</span>
+              <div class="step-pills" id="mathModes">
+                <button class="step-pill on" data-mm="OFF">OFF</button>
+                <button class="step-pill" data-mm="ADD">CH1 + CH2</button>
+                <button class="step-pill" data-mm="SUB">CH1 − CH2</button>
+              </div>
+            </div>
+
+            <p style="font-size:11.5px;color:#94A3B8;line-height:1.5;margin:0;">
+              Activa <b>X-Y</b> en la barra superior de la pantalla para proyectar las <b>Figuras de Lissajous</b> según el ángulo φ, o activa <b>Cursores Δ</b> para medir ΔV y Δt arrastrando las guías con el mouse.
+            </p>
           </div>
         </div>
       </aside>
@@ -446,35 +606,36 @@
       <h3>WaveGen transforma las integrales definidas en una experiencia visual y acústica tangible para el diagnóstico de señales en telecomunicaciones.</h3>
     </div>
 
-  <div class="cf-team">
-    <div class="cf-label">EQUIPO DE DESARROLLO</div>
-    <div class="team-grid">
-      <div class="team-card"><span class="avatar">VG</span><div><b>Vicente Gálvez</b><small>Desarrollador</small></div></div>
-      <div class="team-card"><span class="avatar">MC</span><div><b>Marco Castillo</b><small>Desarrollador</small></div></div>
-      <div class="team-card"><span class="avatar">AC</span><div><b>Alexander Cortés</b><small>Desarrollador</small></div></div>
+    <div class="cf-team">
+      <div class="cf-label">EQUIPO DE DESARROLLO</div>
+      <div class="team-grid">
+        <div class="team-card"><span class="avatar">VG</span><div><b>Vicente Gálvez</b><small>Desarrollador</small></div></div>
+        <div class="team-card"><span class="avatar">MC</span><div><b>Marco Castillo</b><small>Desarrollador</small></div></div>
+        <div class="team-card"><span class="avatar">AC</span><div><b>Alexander Cortés</b><small>Desarrollador</small></div></div>
+      </div>
     </div>
-  </div>
 
-  <div class="cf-contact" id="contacto">
-    <div class="cf-contact-text">
-      <div class="cf-label">CONTACTO</div>
-      <p>¿Dudas, comentarios o ideas sobre WaveGen? Escríbenos.</p>
+    <div class="cf-contact" id="contacto">
+      <div class="cf-contact-text">
+        <div class="cf-label">CONTACTO</div>
+        <p>¿Dudas, comentarios o ideas sobre WaveGen? Escríbenos.</p>
+      </div>
+      <div class="cf-contact-actions">
+        <a class="mail-pill" href="mailto:vicentegalvezcl@gmail.com?subject=WaveGen%20-%20Consulta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <span>vicentegalvezcl@gmail.com</span>
+        </a>
+        <button class="copy-btn" id="btnCopyMail" type="button">Copiar</button>
+      </div>
     </div>
-    <div class="cf-contact-actions">
-      <a class="mail-pill" href="mailto:vicentegalvezcl@gmail.com?subject=WaveGen%20-%20Consulta">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-        <span>vicentegalvezcl@gmail.com</span>
-      </a>
-      <button class="copy-btn" id="btnCopyMail" type="button">Copiar</button>
-    </div>
-  </div>
 
-  <div class="cf-bottom">
-    <div class="tech-chips">
-      <span>Python</span><span>Docker</span><span>Web Audio API</span><span>Canvas 2D</span><span>KaTeX</span>
+    <div class="cf-bottom">
+      <div class="tech-chips">
+        <span>Python</span><span>Docker</span><span>Web Audio API</span><span>Canvas 2D</span><span>KaTeX</span>
+      </div>
+      <div class="cf-copy">© 2026 WAVEGEN · Proyecto de Cálculo Integral</div>
+      <a href="#inicio" class="to-top">Volver arriba ↑</a>
     </div>
-    <div class="cf-copy">© 2026 WAVEGEN · Proyecto de Cálculo Integral</div>
-    <a href="#inicio" class="to-top">Volver arriba ↑</a>
   </div>
 </footer>
 
